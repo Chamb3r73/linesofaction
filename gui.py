@@ -31,49 +31,48 @@ clock = pygame.time.Clock() # the clock variable is initialised but assigned val
 class GameVariables(): # Class that stores variables that need to be used between classes as the turn progresses
     # contains methods to set and return the variables here
     def __init__(self, highlightlist, currentturn, startingcoord, winner, startingaicoord, bestmove, turnnumber, trackingOrigin, trackingDestination, background):
-        self.highlightlist = highlightlist
-        self.currentturn = currentturn
-        self.startingcoord = startingcoord
-        self.winner = winner
-        self.startingaicoord = startingaicoord
-        self.bestmove = bestmove
-        self.turnnumber = turnnumber
-        self.trackingOrigin = trackingOrigin
-        self.trackingDestination = trackingDestination
-        self.backgroundoptions = [blueimage, turtleimage, mountainimage, sunsetimage, turtle3image, mountain2image, turtle2image]
-        self.background = self.backgroundoptions[background]
-        self.backgroundnumber = background
-        self.isbuttonpressed = False
+        self.__highlightlist = highlightlist
+        self.__currentturn = currentturn
+        self.__startingcoord = startingcoord
+        self.__winner = winner
+        self.__startingaicoord = startingaicoord
+        self.__bestmove = bestmove
+        self.__turnnumber = turnnumber
+        self.__trackingOrigin = trackingOrigin
+        self.__trackingDestination = trackingDestination
+        self.__backgroundoptions = [blueimage, turtleimage, mountainimage, sunsetimage, turtle3image, mountain2image, turtle2image]
+        self.__background = self.__backgroundoptions[background]
+        self.__backgroundnumber = background
     
     def editlist(self, newlist):
-        self.highlightlist = newlist
+        self.__highlightlist = newlist
 
     def changeturn(self): # change the turn for both the variable stored in this class and the turn variable in Game
-        if self.currentturn == 'w':
-            self.currentturn = 'b'
+        if self.__currentturn == 'w':
+            self.__currentturn = 'b'
             Game.currentturn = 'b'
         else:
-            self.currentturn = 'w'
+            self.__currentturn = 'w'
             Game.currentturn = 'w'
     
     def setstartingcoord(self, startingcoord):
-        self.startingcoord = startingcoord
+        self.__startingcoord = startingcoord
     
     def checkforwin(self):
-        self.winner = Game.checkforwin()
-        return self.winner
+        self.__winner = Game.checkforwin()
+        return self.__winner
 
     def returnlist(self):
-        return self.highlightlist
+        return self.__highlightlist
     
     def returnturn(self):
-        return self.currentturn
+        return self.__currentturn
     
     def returnstartingcoord(self):
-        return self.startingcoord
+        return self.__startingcoord
     
     def givefullplayername(self):
-        if self.currentturn == 'b':
+        if self.__currentturn == 'b':
             playername = 'Blue'
         else:
             playername = 'Red'
@@ -87,59 +86,52 @@ class GameVariables(): # Class that stores variables that need to be used betwee
         return playername
     
     def setprevaiturndata(self, startingaicoord, bestmove):
-        self.startingaicoord = startingaicoord
-        self.bestmove = bestmove
+        self.__startingaicoord = startingaicoord
+        self.__bestmove = bestmove
     
     def returnaistarting(self):
-        return self.startingaicoord
+        return self.__startingaicoord
     
     def returnbestmove(self):
-        return self.bestmove
+        return self.__bestmove
     
     def incrementturnnumber(self):
-        self.turnnumber+=1
+        self.__turnnumber+=1
 
     def returnturnnumber(self):
-        return self.turnnumber
+        return self.__turnnumber
     
     def settrackingdata(self, origin, destination):
-        self.trackingOrigin = origin
-        self.trackingDestination = destination
+        self.__trackingOrigin = origin
+        self.__trackingDestination = destination
     
     def returntrackingOrigin(self):
-        return self.trackingOrigin
+        return self.__trackingOrigin
     
     def returntrackingDestination(self):
-        return self.trackingDestination
-    
-    def setisbuttonpressed(self):
-        self.isbuttonpressed = not self.isbuttonpressed
-        print(self.isbuttonpressed)
-
-    def getisbuttonpressed(self):
-        return self.isbuttonpressed
+        return self.__trackingDestination
 
     def setbackground(self, backgroundnumber):
-        self.background = self.backgroundoptions[backgroundnumber]
+        self.__background = self.__backgroundoptions[backgroundnumber]
     
     def returnbackground(self):
-        return self.background
+        return self.__background
     
     def nextbackground(self):
-        if self.backgroundnumber == len(self.backgroundoptions)-1:
-            self.backgroundnumber = 0
+        if self.__backgroundnumber == len(self.__backgroundoptions)-1:
+            self.__backgroundnumber = 0
         else:
-            self.backgroundnumber += 1
-        self.background = self.backgroundoptions[self.backgroundnumber]
+            self.__backgroundnumber += 1
+        self.__background = self.__backgroundoptions[self.__backgroundnumber]
 
     def resetall(self):
-        self.highlightlist = []
-        self.currentturn = 'w'
-        self.startingcoord = []
-        self.winner = None
-        self.turnnumber = 1
-        self.trackingOrigin = ''
-        self.trackingDestination = ''
+        self.__highlightlist = []
+        self.__currentturn = 'w'
+        self.__startingcoord = []
+        self.__winner = None
+        self.__turnnumber = 1
+        self.__trackingOrigin = ''
+        self.__trackingDestination = ''
     
 GameVariablesObj = GameVariables([], 'w', '', None, '', '', 1, '', '', 0) # intialise the object
 
@@ -316,8 +308,8 @@ class Screen(): # main screen class that governs the display and runs the main g
             self.screen.blit(textsurface7, (10, 390))
             self.screen.blit(textsurface8, (10, 460))
             self.screen.blit(textsurface9, (10, 540))
-            startAIbutton = Button(100, 600, 600, 200, 'Begin Game vs AI', lambda: self.selectdifficulty()) # button to go into the game
-            startHUMANbutton = Button(750, 600, 600, 200, 'Begin Game vs Human', lambda: self.board(False, 0)) # button to go into the game
+            startHUMANbutton = Button(100, 600, 600, 200, 'Begin Game vs Human', lambda: self.board(False, 0)) # button to go into the game
+            startAIbutton = Button(750, 600, 600, 200, 'Begin Game vs AI', lambda: self.selectdifficulty()) # button to go into the game
             startAIbutton.draw(self.screen)
             startHUMANbutton.draw(self.screen)
             quittoMainMenuButton = Button(1330, 15, 100, 50, 'Back', lambda: self.quittoMainMenu(), [(17, 78, 128), (14, 67, 110)])

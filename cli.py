@@ -21,10 +21,10 @@ def Main(): # main menu loop
                 if computerorhuman == "C":
                     validdifficulty = False
                     while validdifficulty == False:
-                        difficulty = int(input("Enter a difficulty 1-4 for Easy, Medium, Hard or Cheating: "))
-                        if difficulty in [1, 2, 3, 4]: validdifficulty = True
+                        difficulty = input("Enter a difficulty 1-4 for Easy, Medium, Hard or Cheating: ")
+                        if difficulty in ['1', '2', '3', '4']: validdifficulty = True
                     validinput = True
-                    LinesOfAction.playgame(True, difficulty)
+                    LinesOfAction.playgame(True, int(difficulty))
                 elif computerorhuman == "H":
                     validinput = True
                     LinesOfAction.playgame(False, 0)
@@ -37,7 +37,7 @@ def Main(): # main menu loop
 class CommandLineInterface():
     def __init__(self):
         self.currentturn = 'w' # the starting turn is set to black, which is swapped to white when the game begins as white always starts
-        self.turnnumber = 0
+        self.turnnumber = 1
         self.difficultytoname = {
             1:'Computer - Easy',
             2:'Computer - Medium',
@@ -94,23 +94,21 @@ class CommandLineInterface():
             # fetch possible locations
             validcoords = Game.calclegalmoves(startingcoord)
             print(f'Possible moves: {validcoords}')
-            finishedchoosing = input('Type "/" to select a new piece to see moves for, or enter a move: ')
-            if finishedchoosing != '/':
-                choosingpiece = False
-            validinput = False
+            validpiece = False
             # choose where to move to
-        validinput = False
-        targetinvalid = False
-        while validinput == False:
-            if targetinvalid == True:
-                targetcoord = input('Enter the coordinates of the square to move to: ')
-            else:
-                targetcoord = finishedchoosing
-            if targetcoord not in validcoords: # validation checking for the loation to move to done by checking if the player's input is within the generated list of possible moves for that starting location
-                print('Not a valid coord. Please enter again.')
-                targetinvalid = True
-            else:
-                validinput = True
+            while validpiece == False:
+                finishedchoosing = input('Type "/" to select a new piece to see moves for, or enter a move: ')
+                if finishedchoosing == '/':
+                    break
+                if finishedchoosing not in validcoords:
+                    print('Not a valid move. Please enter again.')
+                else:
+                    print('success')
+                    targetcoord = finishedchoosing
+                    validpiece = True
+                    choosingpiece = False
+            validinput = False
+
         # make the move on the board
         Game.makemove(startingcoord, targetcoord)
 
